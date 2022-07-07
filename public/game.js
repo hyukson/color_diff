@@ -4,9 +4,6 @@
     score: 0,
 
     init() {
-      Game.level = 1;
-      Game.score = 0;
-
       Game.nextLevel();
     },
 
@@ -18,24 +15,28 @@
       Card.setAnswer();
     },
 
-    showScore() {
+    showScore(score) {
+      Game.score = score;
 
+      const $counter = document.querySelector(".score p");
+
+      Game.counter($counter, Game.score, 10);
     },
 
-    counter($counter, max) {
+    counter($counter, max, ms = 50) {
       let now = max;
     
       const handle = setInterval(() => {
-        $counter.innerHTML = Math.ceil(max - now);
+        $counter.innerHTML = Math.ceil(max - now).toLocaleString();
       
-        if (now < 0) {
+        if (now < 0 || Game.score != max) {
           clearInterval(handle);
         }
         
         const step = now / 10;
         
         now -= step;
-      }, 50);
+      }, ms);
     }
   }
 
@@ -82,8 +83,8 @@
        .forEach((v, i) => {
           v.onclick = () => {
             if (answerIdx == i) {
-              Game.score += Game.level * Timer.second;
-
+              Game.showScore(Game.score + (Game.level * Timer.second));
+              
               Game.nextLevel();
             } else { 
               Timer.penalty();
@@ -111,7 +112,7 @@
       const $timer = [...document.querySelectorAll(".timer *")];
 
       $timer[0].innerHTML = Math.max(Timer.second, 0);
-      $timer[2].style.width = Math.max(100 * (Timer.second / 15), 0) + "%";
+      $timer[1].style.width = Math.max(100 * (Timer.second / 15), 0) + "%";
 
       if (Timer.second <= 0) {
         return Timer.end();
@@ -140,7 +141,7 @@
 
       Modal.open("result");
 
-      const $counter = document.querySelector(".count p");
+      const $counter = document.querySelector(".count span");
       
       Game.counter($counter, Game.score);
     },
@@ -151,7 +152,7 @@
 
     open(name) {
       const $popup = document.querySelector(".popupView");
-      console.log(Modal.template(name));
+
       $popup.innerHTML = Modal.template(name).outerHTML;
       $popup.classList.add("open");
     },
