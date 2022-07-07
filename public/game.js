@@ -8,7 +8,7 @@
     },
 
     nextLevel() {
-      Game.level = Math.min(Game.level + 1, 40);
+      Game.level = Math.min(Game.level + 1, 30);
       
       Timer.start(15);
 
@@ -23,7 +23,7 @@
       Game.counter($counter, Game.score, 10);
     },
 
-    counter($counter, max, ms = 50) {
+    counter($counter, max, ms = 40) {
       let now = max;
     
       const handle = setInterval(() => {

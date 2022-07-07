@@ -48,10 +48,14 @@ button, input {
 .score {
   text-align: center;
   margin-bottom: .6rem;
+  color: #bfbfbf;
+  font-weight: 500;
 }
 
 .score p {
   font-size: 3rem;
+  color: #000;
+  font-weight: bold;
 }
 
 /* 타이머 */
