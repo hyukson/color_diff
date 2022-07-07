@@ -11,13 +11,32 @@
     },
 
     nextLevel() {
-      Game.level++;
-      console.log(Game.level)
+      Game.level = Math.min(Game.level + 1, 40);
       
       Timer.start(15);
 
       Card.setAnswer();
     },
+
+    showScore() {
+
+    },
+
+    counter($counter, max) {
+      let now = max;
+    
+      const handle = setInterval(() => {
+        $counter.innerHTML = Math.ceil(max - now);
+      
+        if (now < 0) {
+          clearInterval(handle);
+        }
+        
+        const step = now / 10;
+        
+        now -= step;
+      }, 50);
+    }
   }
 
   const Card = {
@@ -28,7 +47,7 @@
 
       const answerIdx = Math.floor(Math.random() * (Game.level ** 2));
 
-      const range = Math.min(Game.level, 4) * 10;
+      const range = Math.min(Math.sqrt(Game.level), 4) * 10;
 
       const answerColor = [...colors].map(v => v - range);
       const fakeColor = [...colors];
@@ -62,7 +81,13 @@
       document.querySelectorAll(".cardList > div")
        .forEach((v, i) => {
           v.onclick = () => {
-            answerIdx == i ? Game.nextLevel() : Timer.penalty();
+            if (answerIdx == i) {
+              Game.score += Game.level * Timer.second;
+
+              Game.nextLevel();
+            } else { 
+              Timer.penalty();
+            }
           }
         }
       );
@@ -112,7 +137,31 @@
 
     end() {
       clearInterval(Timer.handle);
+
+      Modal.open("result");
+
+      const $counter = document.querySelector(".count p");
+      
+      Game.counter($counter, Game.score);
     },
+  }
+
+  const Modal = {
+    template: (name) => [...document.querySelector("template").content.children].find(v => v.classList.contains(name)).cloneNode(true),
+
+    open(name) {
+      const $popup = document.querySelector(".popupView");
+      console.log(Modal.template(name));
+      $popup.innerHTML = Modal.template(name).outerHTML;
+      $popup.classList.add("open");
+    },
+
+    close() {
+      const $popup = document.querySelector(".popupView");
+
+      $popup.innerHTML = "";
+      $popup.classList.remove("open");
+    }
   }
 
   window.onload = () => {
