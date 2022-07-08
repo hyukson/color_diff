@@ -1,4 +1,6 @@
 (function() {
+  const ls = localStorage;
+
   const Game = {
     level: 1,
     score: 0,
@@ -8,7 +10,7 @@
     },
 
     nextLevel() {
-      Game.level = Math.min(Game.level + 1, 30);
+      Game.level = Math.min(Game.level + 1, 35);
       
       Timer.start(15);
 
@@ -37,7 +39,22 @@
         
         now -= step;
       }, ms);
-    }
+    },
+
+    addRank() {
+      const name = prompt("등록할 닉네임을 입력해주세요.").trim();
+      
+      if (!name) {
+        alert("닉네임을 입력해주세요.");
+        return Game.addRank();
+      }
+
+      const data = JSON.parse(ls['colorDiff'] || '[]');
+
+      ls['colorDiff'] = JSON.stringify(
+        [...data, {name, score: Game.score}]
+      );
+    },
   }
 
   const Card = {
@@ -144,6 +161,9 @@
       const $counter = document.querySelector(".count span");
       
       Game.counter($counter, Game.score);
+
+      // 랭킹등록
+      document.querySelector(".rank").onclick = Game.addRank;
     },
   }
 
