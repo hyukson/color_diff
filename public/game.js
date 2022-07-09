@@ -54,6 +54,8 @@
       ls['colorDiff'] = JSON.stringify(
         [...data, {name, score: Game.score}]
       );
+
+      location.href = 'rank.html';
     },
   }
 
