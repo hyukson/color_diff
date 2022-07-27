@@ -1,7 +1,7 @@
 # color_diff
-다른 색깔 찾기 게임을 제작해 보았습니다.
+제한 시간내에 다른 색깔을 찾아 점수를 얻는 게임입니다.
 
-https://main.d5d7mrdnguzvo.amplifyapp.com/
+https://main.d3aw544p6uuxp3.amplifyapp.com/
 
 # Preview
 ![image](https://user-images.githubusercontent.com/93583305/181165457-546c15a8-bbb5-4497-b550-b92173842870.png)
