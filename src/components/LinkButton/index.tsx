@@ -7,7 +7,7 @@ interface LinkButtonTypes {
   color?: string;
 }
 
-const LinkButton = ({link, text, color}: LinkButtonTypes) => {
+const LinkButton = ({link, text, color, ...prop}: LinkButtonTypes) => {
   return (
     <LinkButtonStyled color={color}>
       <Link to={link}>{text}</Link>

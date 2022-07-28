@@ -25,21 +25,6 @@
       Game.counter($counter, Game.score, 10);
     },
 
-    counter($counter, max, ms = 40) {
-      let now = max;
-    
-      const handle = setInterval(() => {
-        $counter.innerHTML = Math.ceil(max - now).toLocaleString();
-      
-        if (now < 0 || Game.score != max) {
-          clearInterval(handle);
-        }
-        
-        const step = now / 10;
-        
-        now -= step;
-      }, ms);
-    },
 
     addRank() {
       const name = prompt("등록할 닉네임을 입력해주세요.").trim();
@@ -114,79 +99,7 @@
     },
   }
 
-  const Timer = {
-    handle: 0,
-    second: 15,
-
-    start(second = 15) {
-      Timer.second = second;
-
-      clearInterval(Timer.handle);
-
-      Timer.handle = setInterval(Timer.loop, 1000);
-      Timer.loop();
-    },
-
-    loop() {
-      const $timer = [...document.querySelectorAll(".timer *")];
-
-      $timer[0].innerHTML = Math.max(Timer.second, 0);
-      $timer[1].style.width = Math.max(100 * (Timer.second / 15), 0) + "%";
-
-      if (Timer.second <= 0) {
-        return Timer.end();
-      }
-
-      Timer.second--;
-    },
-
-    // 카드 찾기 실패로
-    penalty() {
-      const $progress = document.querySelector(".progress");
-
-      $progress.classList.add("vibration");
-
-      setTimeout(() => {
-        $progress.classList.remove("vibration");
-      }, 200);
-
-      Timer.second -= 3;
-
-      Timer.start(Timer.second);
-    },
-
-    end() {
-      clearInterval(Timer.handle);
-
-      Modal.open("result");
-
-      const $counter = document.querySelector(".count span");
-      
-      Game.counter($counter, Game.score);
-
-      // 랭킹등록
-      document.querySelector(".rank").onclick = Game.addRank;
-    },
-  }
-
-  const Modal = {
-    template: (name) => [...document.querySelector("template").content.children].find(v => v.classList.contains(name)).cloneNode(true),
-
-    open(name) {
-      const $popup = document.querySelector(".popupView");
-
-      $popup.innerHTML = Modal.template(name).outerHTML;
-      $popup.classList.add("open");
-    },
-
-    close() {
-      const $popup = document.querySelector(".popupView");
-
-      $popup.innerHTML = "";
-      $popup.classList.remove("open");
-    }
-  }
-
+ 
   window.onload = () => {
     Game.init();
   }
