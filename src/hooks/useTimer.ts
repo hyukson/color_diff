@@ -20,7 +20,7 @@ const useTimer = ({startS, speed}: useTimerTypes) => {
 
   const loop = useCallback(() => {
     if (second <= 0) {
-      return end();
+      return endTimer();
     }
     
     setSecond(second => second - 1);
