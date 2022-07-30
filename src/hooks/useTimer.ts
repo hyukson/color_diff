@@ -15,7 +15,6 @@ const useTimer = ({startS, speed}: useTimerTypes) => {
     clearInterval(handleRef.current);
 
     handleRef.current = setInterval(loop, speed);
-    loop();
   }
 
   const loop = useCallback(() => {

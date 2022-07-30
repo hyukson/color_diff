@@ -35,6 +35,12 @@ const Game = () => {
   }
 
   useEffect(() => {
+    if (second < 0) {
+      endTimer();
+    }
+  }, [second]);
+
+  useEffect(() => {
     startTimer();
   }, []);
 
