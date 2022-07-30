@@ -1,5 +1,5 @@
-import { constants } from "buffer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
 import CardList from "../../components/CardList";
 import LinkButton from "../../components/LinkButton";
 import Modal from "../../components/Modal";
@@ -13,7 +13,7 @@ const Game = () => {
   const [score, setScore] = useState<number>(0);
 
   // timer
-  const { second, isAnimate, startTimer, endTimer, resetTimer } = useTimer({startS: 15, speed: 1000});
+  const { second, isAnimate, startTimer, endTimer, resetTimer, penaltyTimer } = useTimer({startS: 15, speed: 1000});
 
   const scoreUP = (level: number, second: number) => {
     setScore(score => score + (level * second))
@@ -23,13 +23,28 @@ const Game = () => {
     setLevel(level => Math.min(level + 1, 35));
   }
 
+  const pick = (answerIdx: number, i: number) => {
+    if (answerIdx == i) {
+      scoreUP(level, second);
+      levelUP();
+
+      resetTimer();
+    } else { 
+      penaltyTimer();
+    }
+  }
+
+  useEffect(() => {
+    startTimer();
+  }, []);
+
   return (
     <Wrap>
       <Score score={score} />
 
       <Timer second={second} isAnimate={isAnimate} />
 
-      <CardList level={level} />
+      <CardList level={level} pick={pick} />
 
       <Modal>
         <div className="result">

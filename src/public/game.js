@@ -25,7 +25,6 @@
       Game.counter($counter, Game.score, 10);
     },
 
-
     addRank() {
       const name = prompt("등록할 닉네임을 입력해주세요.").trim();
       
@@ -45,20 +44,6 @@
   }
 
   const Card = {
-    // 카드 데이터 생성
-    setAnswer() {
-      const colors = new Array(3).fill()
-        .map(_ => Math.floor(Math.random() * 200) + 55);
-
-      const answerIdx = Math.floor(Math.random() * (Game.level ** 2));
-
-      const range = Math.min(Math.sqrt(Game.level), 4) * 10;
-
-      const answerColor = [...colors].map(v => v - range);
-      const fakeColor = [...colors];
-
-      Card.setList(answerIdx, answerColor, fakeColor);
-    },
 
     // 카드 리스트 정렬
     setList(answerIdx, answerColor, fakeColor) {
@@ -79,23 +64,6 @@
 
       // 이벤트 추가
       Card.pick(answerIdx);
-    },
-
-    // 카드 선택 여부
-    pick(answerIdx) {
-      document.querySelectorAll(".cardList > div")
-       .forEach((v, i) => {
-          v.onclick = () => {
-            if (answerIdx == i) {
-              Game.showScore(Game.score + (Game.level * Timer.second));
-              
-              Game.nextLevel();
-            } else { 
-              Timer.penalty();
-            }
-          }
-        }
-      );
     },
   }
 

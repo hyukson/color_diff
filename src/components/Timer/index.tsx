@@ -12,7 +12,7 @@ const Timer = ({second, isAnimate}: TimerTypes) => {
   return <TimerStyled>
     <div className="timer">
       <h3>{nowSecond}</h3>
-      <div className={"progress" + (isAnimate ? "vibration" : "")}style={width}></div>
+      <div className={"progress " + (isAnimate ? "vibration" : "")}style={width}></div>
     </div>
   </TimerStyled>
 }
