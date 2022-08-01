@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 interface useTimerTypes {
   startS: number;
@@ -14,16 +14,14 @@ const useTimer = ({startS, speed}: useTimerTypes) => {
   const startTimer = () => {
     clearInterval(handleRef.current);
 
-    handleRef.current = setInterval(loop, speed);
+    handleRef.current = setInterval(() => { 
+      setSecond(second => second - 1);
+    }, speed);
   }
-
-  const loop = useCallback(() => {
-    if (second <= 0) {
-      return endTimer();
-    }
-    
-    setSecond(second => second - 1);
-  }, [second]);
+  
+  const endTimer = () => {
+    clearInterval(handleRef.current);
+  }
 
   const resetTimer = () => {
     endTimer();
@@ -31,21 +29,16 @@ const useTimer = ({startS, speed}: useTimerTypes) => {
     startTimer();
   }
 
-  const endTimer = () => {
-    clearInterval(handleRef.current);
-  }
-
   // 카드 찾기 실패로
   const penaltyTimer = () => {
     setIsAnimate(true);
+    setSecond(second => second - 3);
+
+    startTimer();
 
     setTimeout(() => {
       setIsAnimate(false);
     }, 200);
-
-    setSecond(second => second - 3);
-
-    startTimer();
   }
 
   return {

@@ -1,6 +1,8 @@
 import { useEffect, useRef } from "react";
 import { ScoreStyled } from "./styld";
 
+import counter from "../../utils/counter";
+
 interface ScoreTypes {
   score: number;
 }
@@ -9,23 +11,7 @@ const Score = ({ score }: ScoreTypes) => {
   const counterRef = useRef() as any;
 
   useEffect(() => {
-    const counter = (max: number) => {
-      let now = max;
-    
-      const handle = setInterval(() => {
-        counterRef.current.innerHTML = Math.ceil(max - now).toLocaleString();
-      
-        if (now < 1 || score != max) {
-          clearInterval(handle);
-        }
-        
-        const step = now / 10;
-        
-        now -= step;
-      }, 10);
-    }
-
-    counter(score);
+    counter(counterRef.current, score);
   }, [score]);
 
   return <ScoreStyled>

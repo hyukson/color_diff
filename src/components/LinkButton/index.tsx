@@ -5,11 +5,12 @@ interface LinkButtonTypes {
   link: string;
   text: string;
   color?: string;
+  onClick?: () => void;
 }
 
-const LinkButton = ({link, text, color, ...prop}: LinkButtonTypes) => {
+const LinkButton = ({link, text, color, ...props}: LinkButtonTypes) => {
   return (
-    <LinkButtonStyled color={color}>
+    <LinkButtonStyled {...props} color={color}>
       <Link to={link}>{text}</Link>
     </LinkButtonStyled>
   )

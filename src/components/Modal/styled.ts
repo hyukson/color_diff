@@ -2,24 +2,23 @@ import styled from "styled-components";
 
 export const ModalStyled = styled.div`
   /* 모달 */
-  .popupView {
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background: rgba(0, 0, 0, .6);
-    opacity: 0;
-    pointer-events: none;
-    transition: .4s;
-  }
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, .6);
+  opacity: 0;
+  pointer-events: none;
+  transition: .4s;
+  z-index: 222;
 
-  .popupView.open {
+  &.show {
     pointer-events: initial;
     opacity: 1;
   }
 
-  .popupView > div {
+  & > div {
     min-width: 350px;
     position: fixed;
     top: 50%;

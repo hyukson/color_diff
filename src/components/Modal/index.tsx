@@ -1,21 +1,14 @@
-import React, { useState } from "react";
 import { ModalStyled } from "./styled";
 
 interface ModalTypes {
+  isOpen: boolean;
   children: React.ReactNode
 }
 
-const Modal = ({ children }: ModalTypes) => {
-  const [openModal, setOpenModal ] = useState<React.ReactNode>();
-  
-  // open("result");
-
-  // const $counter = document.querySelector(".count span");
-  
-  // Game.counter($counter, Game.score);
+const Modal = ({ isOpen, children }: ModalTypes) => {
   return (
-    <ModalStyled>
-      <div className="popupView">{openModal}</div>  
+    <ModalStyled className={isOpen ? "show" : ""}>
+      {children}
     </ModalStyled>
   )
 }
