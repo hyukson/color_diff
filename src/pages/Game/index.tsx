@@ -7,12 +7,15 @@ import Modal from "../../components/Modal";
 import Wrap from "../../components/Rap";
 import Score from "../../components/Score";
 import Timer from "../../components/Timer";
+import useLevel from "../../hooks/useLevel";
+import useScore from "../../hooks/useScore";
 
 import useTimer from "../../hooks/useTimer";
+import counter from "../../utils/counter";
 
 const Game = () => {
-  const [level, setLevel] = useState<number>(2);
-  const [score, setScore] = useState<number>(0);
+  const { score, increaseScore, resetScore } = useScore();
+  const { level, increaseLevel, resetLevel } = useLevel();
 
   // Modal Open state
   const [openModal, setOpenModal] = useState<boolean>(false);
@@ -33,21 +36,11 @@ const Game = () => {
   // router 
   const navigate = useNavigate();
 
-  // Point Increase
-  const scoreUP = (level: number, second: number) => {
-    setScore(score => score + (level * second))
-  }
-
-  // level Increase
-  const levelUP = () => {
-    setLevel(level => Math.min(level + 1, 35));
-  }
-
   // Card Select
   const pick = (answerIdx: number, i: number) => {
     if (answerIdx === i) {
-      scoreUP(level, second);
-      levelUP();
+      increaseScore(level, second);
+      increaseLevel();
 
       resetTimer();
     } else { 
@@ -79,8 +72,9 @@ const Game = () => {
   }
 
   const restGame = () => {
-    setLevel(2);
-    setScore(0);
+    resetLevel();
+    resetScore();
+
     setOpenModal(false);
     resetTimer();
   }
@@ -88,6 +82,8 @@ const Game = () => {
   useEffect(() => {
     if (second <= 0) {
       endTimer();
+      counter(GameOverRef.current, score);
+
       setOpenModal(true);
     }
   }, [second]);
