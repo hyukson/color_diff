@@ -41,7 +41,6 @@ const Game = () => {
     if (answerIdx === i) {
       increaseScore(level, second);
       increaseLevel();
-
       resetTimer();
     } else { 
       penaltyTimer();
