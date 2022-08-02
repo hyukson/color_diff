@@ -1,7 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import './App.css';
-
 import Game from './pages/Game';
 import Main from './pages/Main';
 import Rank from './pages/Rank';
