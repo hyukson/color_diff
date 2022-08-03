@@ -1,7 +1,7 @@
 # color_diff
 제한 시간내에 다른 색깔을 찾아 점수를 얻는 게임입니다.
 
-https://main.d3aw544p6uuxp3.amplifyapp.com/
+https://main.d18xumb8hyzm93.amplifyapp.com/
 
 
 # Preview
