@@ -25,7 +25,7 @@ const useTimer = ({startS, speed}: useTimerTypes) => {
 
   const resetTimer = () => {
     endTimer();
-    setSecond(startS);
+    setSecond(second => Math.min(second + 3, startS));
     startTimer();
   }
 
